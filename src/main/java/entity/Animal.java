@@ -12,7 +12,7 @@ public class Animal {
     // private image;
     private String name;
     private int age;
-    private int weight;
+    private double weight;
     private boolean neuter;
     private String kind;
     private String detail;
@@ -21,5 +21,5 @@ public class Animal {
     private int activity;
     private int sociality;
     private int friendly;
-    private String adoptionState;
+    private boolean adoptionState;
 }

@@ -29,7 +29,7 @@ public class PromotionController {
         animal.setSociality(form.getSociality());
         animal.setWeight(form.getWeight());
         animal.setHealthState(form.getHealthState());
-        animal.setAdoptionState(form.getAdoptionState());
+        animal.setAdoptionState(form.isAdoptionState());
 
         Promotion pro = new Promotion(animal);
         pro.setCondition(form.getCondition());
@@ -49,8 +49,18 @@ public class PromotionController {
 
     @GetMapping("/all-promotion")
     public List<SimplePromotionDto> getAllPromotion() {
+        int data = 10;
         List<SimplePromotionDto> simpleList = new ArrayList<>();
-
+        for(int i = 0; i <= data; i++){
+            SimplePromotionDto simple = new SimplePromotionDto(i);
+            simple.setAnimalNo(i);
+            simple.setTitle("사지말고 입양하세요" + i);
+            simple.setName("초코" + i);
+            simple.setGender("암컷");
+            simple.setAge(1 + i);
+            simple.setKind("고양이");
+            simpleList.add(simple);
+        }
 
         return simpleList;
     }

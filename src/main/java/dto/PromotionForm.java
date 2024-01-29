@@ -1,13 +1,16 @@
 package dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class PromotionForm {
     // private image;
+    private String title;
     private String name;
     private int age;
-    private int weight;
+    private double weight;
     private boolean neuter;
     private String kind;
     private String detail;
@@ -16,7 +19,7 @@ public class PromotionForm {
     private int activity;
     private int sociality;
     private int friendly;
-    private String adoptionState;
+    private boolean adoptionState;
     private String introduction;
     private String condition;
 }
