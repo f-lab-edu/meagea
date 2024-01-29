@@ -1,6 +1,5 @@
 package entity;
 
-import entity.Animal;
 import lombok.Getter;
 import lombok.Setter;
 
