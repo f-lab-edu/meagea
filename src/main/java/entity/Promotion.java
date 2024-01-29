@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Promotion {
     public Promotion(Animal animal) {
-
+        setAnimal(animal);
     }
     public Promotion(){};
 
