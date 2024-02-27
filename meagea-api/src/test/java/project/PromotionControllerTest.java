@@ -64,7 +64,7 @@ public class PromotionControllerTest {
         ResponseEntity<Promotion> responseEntity = testRestTemplate.getForEntity(url, Promotion.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         Promotion pro = responseEntity.getBody();
-        assertThat(pro.getNo()).isEqualTo(10);
+        assertThat(pro.getTitle()).isEqualTo("제목");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PromotionControllerTest {
                 new ParameterizedTypeReference<List<SimplePromotionDto>>() {});
         List<SimplePromotionDto> dtoList = responseEntity.getBody();
         for(int i = 0; i < dtoList.size(); i++) {
-            assertThat(dtoList.get(i).getNo()).isEqualTo(i);
+            assertThat(dtoList.get(i).getName()).isEqualTo("초코" + i);
         }
     }
 }

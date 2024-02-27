@@ -1,14 +1,16 @@
 package entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name = "animal")
+@NoArgsConstructor
 public class Animal {
     public Animal(String name, int age, double weight, boolean neuter, String kind, String detail,
                   String place, int healthState, int activity, int sociality, int friendly) {
-        this.no = 10;
         this.name = name;
         this.age = age;
         this.weight = weight;
@@ -23,6 +25,8 @@ public class Animal {
         this.adoptionState = false;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int no;
     private String name;
     private int age;

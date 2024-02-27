@@ -29,7 +29,7 @@ public class PromotionController {
         List<Integer> fileNoList = new ArrayList<>();
         AnimalFileManager fileMan = new AnimalFileManager();
         for(MultipartFile m : form.getImageList()) {
-            AnimalFile animalFile = new AnimalFile(m.getOriginalFilename(), fileMan.serverFile(m));
+            AnimalFile animalFile = new AnimalFile(1, m.getOriginalFilename(), fileMan.serverFile(m), "promotion");
             fileNoList.add(animalFile.getNo());
         }
 
@@ -38,12 +38,12 @@ public class PromotionController {
                                    form.getSociality(),form.getFriendly());
 
         return new Promotion(form.getTitle(), animal.getNo(), form.getIntroduction(),
-                                        form.getCondition(), fileNoList);
+                                        form.getCondition());
     }
 
     @GetMapping("/promotion/{no}")
     public Promotion getPromotion(@PathVariable int no){
-        return new Promotion("제목", 1, "설명", "입양조건", new ArrayList<>());
+        return new Promotion("제목", 1, "설명", "입양조건");
     }
 
     @GetMapping("/all-promotion-title")
