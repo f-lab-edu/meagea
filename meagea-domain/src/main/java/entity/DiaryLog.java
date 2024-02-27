@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class DiaryLog {
 
     public DiaryLog(int promotionNo, int fileNo, String body) {
+        this.no = (int)(Math.random()*10000);
         this.promotionNo = promotionNo;
         this.fileNo = fileNo;
         this.body = body;
@@ -20,7 +21,6 @@ public class DiaryLog {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int no;
     private int promotionNo;
     private int fileNo;
