@@ -31,8 +31,7 @@ public class PromotionService {
             System.out.println("조회 결과 없음");
         }
         Animal animal = animalRepo.findById(form.getAnimalNo()).get();
-        Promotion pro = new Promotion(form.getTitle(), animal.getNo(), form.getIntroduction(), form.getCondition());
-        proRepo.save(pro);
+        Promotion pro = proRepo.save(new Promotion(form.getTitle(), animal.getNo(), form.getIntroduction(), form.getCondition()));
         AnimalFileManager fileMan = new AnimalFileManager();
         for(MultipartFile m : form.getImageList()) {
             AnimalFile animalFile = new AnimalFile(pro.getNo(), m.getOriginalFilename(), fileMan.serverFile(m), "promotion");
