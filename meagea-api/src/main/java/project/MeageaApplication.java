@@ -7,9 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @SpringBootApplication
 @EntityScan(basePackages = "entity")
 public class MeageaApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MeageaApplication.class, args);
 	}
-
 }

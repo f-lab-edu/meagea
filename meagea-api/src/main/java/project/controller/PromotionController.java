@@ -1,20 +1,15 @@
 package project.controller;
 
-import entity.Animal;
-import entity.AnimalFile;
 import entity.Promotion;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import project.service.PromotionService;
-import project.unit.AnimalFileManager;
 import project.dto.PromotionForm;
 import project.dto.SimplePromotionDto;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -29,12 +24,12 @@ public class PromotionController {
     }
 
     @GetMapping("/promotion/{no}")
-    public Promotion getPromotion(@PathVariable int no){
+    public Promotion getPromotion(@PathVariable int no) {
         return proService.findByNo(no);
     }
 
     @GetMapping("/all-promotion-title")
-    public List<SimplePromotionDto> getAllPromotionTitle() {
+    public List<SimplePromotionDto> getAllPromotionTitle() throws IOException  {
         return proService.findAllSimple();
     }
 }

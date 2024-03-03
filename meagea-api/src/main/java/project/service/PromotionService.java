@@ -27,8 +27,8 @@ public class PromotionService {
     private final AnimalFileRepository fileRepo;
 
     public Promotion savePromotion(PromotionForm form) throws IOException {
-        if(animalRepo.findById(form.getAnimalNo()).isEmpty()){
-            System.out.println("조회 결과 없음");
+        if(animalRepo.findById(form.getAnimalNo()).isEmpty()) {
+            throw new NullPointerException("조회 결과 없음");
         }
         Animal animal = animalRepo.findById(form.getAnimalNo()).get();
         Promotion pro = proRepo.save(new Promotion(form.getTitle(), animal.getNo(), form.getIntroduction(), form.getCondition()));
@@ -41,18 +41,18 @@ public class PromotionService {
         return pro;
     }
 
-    public Promotion findByNo(int no) {
+    public Promotion findByNo(int no){
         if(proRepo.findById(no).isEmpty()){
-            System.out.println("조회 결과 없음");
+            throw new NullPointerException("조회 결과 없음");
         }
 
         return proRepo.findById(no).get();
     }
 
-    public List<SimplePromotionDto> findAllSimple(){
+    public List<SimplePromotionDto> findAllSimple() {
         List<Promotion> proList = proRepo.findAll();
         if(proList.isEmpty()) {
-            System.out.println("조회 결과 없음");
+            throw new NullPointerException("조회 결과 없음");
         }
         
         List<SimplePromotionDto> dtoList = new ArrayList<>();
