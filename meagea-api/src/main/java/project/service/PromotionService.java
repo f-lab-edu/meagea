@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.PromotionForm;
+import project.dto.PromotionModifyDto;
 import project.dto.SimplePromotionDto;
 import project.repository.AnimalFileRepository;
 import project.repository.AnimalRepository;
@@ -14,6 +15,7 @@ import project.repository.PromotionRepository;
 import project.unit.AnimalFileManager;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,4 +69,18 @@ public class PromotionService {
         return dtoList;
     }
 
+    public Promotion updatePromotion(PromotionModifyDto modifyDto) {
+        Optional<Promotion> optPro = proRepo.findById(modifyDto.getNo());
+        if(optPro.isEmpty()) {
+            throw new NullPointerException("수정 가능한 Promotion 객체가 존재하지 않습니다.");
+        }
+        Promotion pro = optPro.get();
+        pro.setTitle(modifyDto.getTitle());
+        pro.setIntroduction(modifyDto.getIntroduction());
+        pro.setTerms(modifyDto.getTerms());
+        pro.setModifyDate(LocalDateTime.now());
+        proRepo.save(pro);
+
+        return pro;
+    }
 }

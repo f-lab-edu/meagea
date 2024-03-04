@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.PromotionForm;
+import project.dto.PromotionModifyDto;
 import project.dto.SimplePromotionDto;
 import project.repository.AnimalFileRepository;
 import project.repository.AnimalRepository;
@@ -127,5 +128,37 @@ public class PromotionServiceTest {
 
         Throwable ex = Assertions.assertThrows(NullPointerException.class, () -> service.findAllSimple());
         assertThat(ex.getMessage()).isEqualTo("조회 결과 없음");
+    }
+
+    @Test
+    public void updatePromotionSuccessTest() throws IOException {
+        List<MultipartFile> list = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            File file = new File("src\\main\\java\\project\\image\\" + "file" + i + ".jpg");
+            MockMultipartFile mul = new MockMultipartFile("file" + i, new FileInputStream(file));
+            list.add(mul);
+        }
+        PromotionModifyDto dto = new PromotionModifyDto(1, "수정된 제목", list, "수정된 설명", "수정된 조건");
+        Promotion pro = new Promotion("제목", 5, "내용", "내용2");
+        given(proRepo.findById(dto.getNo())).willReturn(Optional.of(pro));
+
+        Promotion result = service.updatePromotion(dto);
+
+        verify(proRepo, times(1)).findById(1);
+        assertThat(result.getTitle()).isEqualTo(dto.getTitle());
+    }
+
+    @Test
+    public void updatePromotionFailTest() throws IOException {
+        List<MultipartFile> list = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            File file = new File("src\\main\\java\\project\\image\\" + "file" + i + ".jpg");
+            MockMultipartFile mul = new MockMultipartFile("file" + i, new FileInputStream(file));
+            list.add(mul);
+        }
+        PromotionModifyDto dto = new PromotionModifyDto(1, "수정된 제목", list, "수정된 설명", "수정된 조건");
+
+        Throwable ex = Assertions.assertThrows(NullPointerException.class, () -> service.updatePromotion(dto));
+        assertThat(ex.getMessage()).isEqualTo("수정 가능한 Promotion 객체가 존재하지 않습니다.");
     }
 }
