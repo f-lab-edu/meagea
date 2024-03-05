@@ -2,6 +2,7 @@ package project.service;
 
 import entity.Animal;
 import entity.AnimalFile;
+import entity.Log;
 import entity.Promotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import project.dto.PromotionModifyDto;
 import project.dto.SimplePromotionDto;
 import project.repository.AnimalFileRepository;
 import project.repository.AnimalRepository;
+import project.repository.LogRepository;
 import project.repository.PromotionRepository;
 import project.unit.AnimalFileManager;
 
@@ -27,6 +29,7 @@ public class PromotionService {
     private final PromotionRepository proRepo;
     private final AnimalRepository animalRepo;
     private final AnimalFileRepository fileRepo;
+    private final LogRepository logRepo;
 
     public Promotion savePromotion(PromotionForm form) throws IOException {
         if(animalRepo.findById(form.getAnimalNo()).isEmpty()) {
@@ -82,5 +85,17 @@ public class PromotionService {
         proRepo.save(pro);
 
         return pro;
+    }
+
+    public void deletePromotion(int no) {
+        List<AnimalFile> imageList = fileRepo.findAllByPromotionNo(no);
+        fileRepo.deleteAll(imageList);
+
+        List<Log> logList = logRepo.findAllByPromotionNo(no);
+        if(!logList.isEmpty()){
+            logRepo.deleteAll(logList);
+        }
+
+        proRepo.deleteById(no);
     }
 }

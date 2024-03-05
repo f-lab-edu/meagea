@@ -49,7 +49,7 @@ public class PromotionServiceTest {
     public void savePromotionSuccessTest() throws IOException {
         ArgumentCaptor<Promotion> proCaptor = ArgumentCaptor.forClass(Promotion.class);
 
-        Animal animal = new Animal("머핀", 5, "암컷", 3.5, true, "친칠라",
+        Animal animal = new Animal("머핀", 5, "암컷", 3.5, true, "친칠라", "믹스",
                                     "동네", 2, 1, 2, 1);
         given(animalRepo.findById(anyInt())).willReturn(Optional.of(animal));
         List<MultipartFile> list = new ArrayList<>();
@@ -104,7 +104,7 @@ public class PromotionServiceTest {
     @Test
     public void findAllSimpleSuccessTest() {
         List<Promotion> proList = new ArrayList<>();
-        Animal animal = new Animal("머핀", 5, "암컷", 3.5, true, "친칠라",
+        Animal animal = new Animal("머핀", 5, "암컷", 3.5, true, "친칠라", "잡종",
                 "동네", 2, 1, 2, 1);
         for(int i = 0; i < 4; i++) {
             proList.add(new Promotion("제목", i, "내용", "내용2"));

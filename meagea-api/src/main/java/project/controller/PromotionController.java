@@ -38,4 +38,9 @@ public class PromotionController {
     public Promotion modifyPromotion(@ModelAttribute PromotionModifyDto modifyDto) {
         return proService.updatePromotion(modifyDto);
     }
+
+    @DeleteMapping("/promotion/{no}")
+    public void deletePromotion(@PathVariable int no) {
+        proService.deletePromotion(no);
+    }
 }

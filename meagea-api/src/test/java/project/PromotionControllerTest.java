@@ -2,7 +2,6 @@ package project;
 
 import entity.Animal;
 import entity.Promotion;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import project.dto.AnimalForm;
 import project.dto.SimplePromotionDto;
 
 import java.io.File;
@@ -36,6 +34,7 @@ public class PromotionControllerTest {
         map.add("weight", 3.5);
         map.add("neuter", true);
         map.add("kind", "친칠라");
+        map.add("detail", "믹스");
         map.add("place", "동네");
         map.add("healthState", 2);
         map.add("activity", 1);
@@ -53,7 +52,7 @@ public class PromotionControllerTest {
     public void 입양_홍보글_생성() throws IOException {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("title", "제목");
-        map.add("animalNo", 9213);
+        map.add("animalNo", 8113);
         map.add("introduction", "귀여움");
         map.add("condition", "집 좋아하시는 분");
         for(int i = 0; i < 4; i++) {
@@ -108,9 +107,15 @@ public class PromotionControllerTest {
         }
         map.add("introduction", "수정된 설명");
         map.add("terms", "수정된 조건");
-        HttpEntity entityMap = new HttpEntity<>(map);
+        HttpEntity<MultiValueMap<String, Object>> entityMap = new HttpEntity<>(map);
 
         ResponseEntity<Promotion> modifyPro = testRestTemplate.exchange(url, HttpMethod.PATCH, entityMap, Promotion.class);
         assertThat(modifyPro.getBody().getTitle()).isEqualTo("수정된 제목");
+    }
+
+    @Test
+    public void 홍보글_삭제_테스트(){
+        String url = "/meagea/promotion/" + 3062;
+        testRestTemplate.delete(url);
     }
 }
