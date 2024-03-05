@@ -22,7 +22,6 @@ import project.service.PromotionService;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,13 +89,13 @@ public class PromotionServiceTest {
         Promotion pro = new Promotion("제목", 5, "내용", "내용2");
         given(proRepo.findById(eq(10))).willReturn(Optional.of(pro));
 
-        int result = service.findByNo(10).getAnimalNo();
+        int result = service.findByNo(10).getAnimal().getNo();
         assertThat(result).isEqualTo(5);
     }
 
     @Test
     public void findByNoFailTest() throws NullPointerException {
-        Throwable ex = Assertions.assertThrows(Exception.class, () -> service.findByNo(10).getAnimalNo());
+        Throwable ex = Assertions.assertThrows(Exception.class, () -> service.findByNo(10));
 
         assertThat(ex.getMessage()).isEqualTo("조회 결과 없음");
     }
@@ -142,7 +141,7 @@ public class PromotionServiceTest {
         Promotion pro = new Promotion("제목", 5, "내용", "내용2");
         given(proRepo.findById(dto.getNo())).willReturn(Optional.of(pro));
 
-        Promotion result = service.updatePromotion(dto);
+        Promotion result = service.updatePromotion(dto).getPromotion();
 
         verify(proRepo, times(1)).findById(1);
         assertThat(result.getTitle()).isEqualTo(dto.getTitle());

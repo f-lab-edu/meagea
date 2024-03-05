@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnimalFileRepository extends JpaRepository<AnimalFile, Integer> {
     List<AnimalFile> findAllByPromotionNo(int promotionNo);
+    List<AnimalFile> findAllByLogNo(int logNo);
 }

@@ -21,7 +21,7 @@ public class AnimalService {
 
     public Animal findAnimalByNo(int no){
         if(animalRepo.findById(no).isEmpty()){
-            System.out.println("조회 결과 없음");
+            throw new NullPointerException("조회 결과 없음");
         }
 
         return animalRepo.findById(no).get();

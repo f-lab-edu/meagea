@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -15,14 +15,12 @@ public class Log {
         this.no = (int)(Math.random()*10000);
         this.promotionNo = promotionNo;
         this.body = body;
-        this.makeDate = LocalDate.now();
-        this.modifyDate = LocalDate.now();
+        this.makeDate = LocalDateTime.now();
     }
 
     @Id
     private int no;
     private int promotionNo;
     private String body;
-    private LocalDate makeDate;
-    private LocalDate modifyDate;
+    private LocalDateTime makeDate;
 }

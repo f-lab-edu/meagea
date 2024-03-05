@@ -3,6 +3,7 @@ package project.controller;
 import entity.Promotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import project.dto.PromotionDetailDto;
 import project.dto.PromotionModifyDto;
 import project.service.PromotionService;
 import project.dto.PromotionForm;
@@ -20,12 +21,12 @@ public class PromotionController {
     private final PromotionService proService;
 
     @PostMapping("/promotion")
-    public Promotion addPromotion(@ModelAttribute PromotionForm form) throws IOException {
+    public PromotionDetailDto addPromotion(@ModelAttribute PromotionForm form) throws IOException {
         return proService.savePromotion(form);
     }
 
     @GetMapping("/promotion/{no}")
-    public Promotion getPromotion(@PathVariable int no) {
+    public PromotionDetailDto getPromotion(@PathVariable int no) {
         return proService.findByNo(no);
     }
 
@@ -35,7 +36,7 @@ public class PromotionController {
     }
 
     @PatchMapping("/promotion")
-    public Promotion modifyPromotion(@ModelAttribute PromotionModifyDto modifyDto) {
+    public PromotionDetailDto modifyPromotion(@ModelAttribute PromotionModifyDto modifyDto) {
         return proService.updatePromotion(modifyDto);
     }
 
