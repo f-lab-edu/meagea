@@ -27,15 +27,16 @@ public class PromotionControllerTest {
     TestRestTemplate testRestTemplate = new TestRestTemplate();
 
     @Test
-    public void 입양_홍보글_생성() throws IOException {
+    public void 입양_홍보글_생성() {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
         map.add("title", "제목");
-        map.add("animalNo", 8113);
+        map.add("animalNo", 5981);
         map.add("introduction", "귀여움");
         map.add("condition", "집 좋아하시는 분");
         for(int i = 0; i < 4; i++) {
             // path 경로에 있는 name.type 파일을 File 객체로 생성
-            File file = new File("src\\main\\java\\project\\image\\" + "file" + i + ".jpg");
+            File file = new File("/Users/gim-eunjeong/IdeaProjects/meagea/meagea-api/src/main/java/project/image/"
+                    + "file" + i + ".jpg");
             FileSystemResource resource = new FileSystemResource(file);
             map.add("imageList", resource);
         }
@@ -44,18 +45,17 @@ public class PromotionControllerTest {
         ResponseEntity<PromotionDetailDto> responseEntity = testRestTemplate.postForEntity(url, map, PromotionDetailDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         PromotionDetailDto detailDto = responseEntity.getBody();
-        Promotion pro = detailDto.getPromotion();
-        assertThat(pro.getIntroduction()).isEqualTo("귀여움");
+        assertThat(detailDto.getIntroduction()).isEqualTo("귀여움");
     }
 
 
     @Test
     public void 입양_홍보글_특정_조회(){
-        String url = "/meagea/promotion/" + 9280;
+        String url = "/meagea/promotion/" + 5112;
         ResponseEntity<PromotionDetailDto> responseEntity = testRestTemplate.getForEntity(url, PromotionDetailDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Promotion pro = responseEntity.getBody().getPromotion();
-        assertThat(pro.getTitle()).isEqualTo("제목");
+        assertThat(responseEntity.getBody().getTitle()).isEqualTo("제목");
+        assertThat(responseEntity.getBody().getImageList().size()).isEqualTo(4);
     }
 
     @Test
@@ -76,11 +76,11 @@ public class PromotionControllerTest {
 
         String url = "/meagea/promotion";
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("no", 4083);
+        map.add("no", 2858);
         map.add("title", "수정된 제목");
         for(int i = 0; i < 4; i++) {
-            // path 경로에 있는 name.type 파일을 File 객체로 생성
-            File file = new File("src\\main\\java\\project\\image\\" + "file" + i + ".jpg");
+            File file = new File("/Users/gim-eunjeong/IdeaProjects/meagea/meagea-api/src/main/java/project/image/"
+                    + "file" + i + ".jpg");
             FileSystemResource resource = new FileSystemResource(file);
             map.add("imageList", resource);
         }
@@ -89,13 +89,12 @@ public class PromotionControllerTest {
         HttpEntity<MultiValueMap<String, Object>> entityMap = new HttpEntity<>(map);
 
         ResponseEntity<PromotionDetailDto> modifyPro = testRestTemplate.exchange(url, HttpMethod.PATCH, entityMap, PromotionDetailDto.class);
-        Promotion pro = modifyPro.getBody().getPromotion();
-        assertThat(pro.getTitle()).isEqualTo("수정된 제목");
+        assertThat(modifyPro.getBody().getTitle()).isEqualTo("수정된 제목");
     }
 
     @Test
     public void 홍보글_삭제_테스트(){
-        String url = "/meagea/promotion/" + 3062;
+        String url = "/meagea/promotion/" + 2858;
         testRestTemplate.delete(url);
     }
 }
