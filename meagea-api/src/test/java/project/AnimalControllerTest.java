@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import project.dto.AnimalDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +20,7 @@ public class AnimalControllerTest {
     @Test
     public void 유기동물_추가_테스트() {
         MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("name", "머핀");
+        map.add("name", "바보쥐");
         map.add("age", 5);
         map.add("gender", "암컷");
         map.add("weight", 3.5);
@@ -33,16 +34,16 @@ public class AnimalControllerTest {
         map.add("friendly", 1);
 
         String url = "/meagea/animal";
-        ResponseEntity<Animal> animalRe = testRestTemplate.postForEntity(url, map, Animal.class);
+        ResponseEntity<AnimalDto> animalRe = testRestTemplate.postForEntity(url, map, AnimalDto.class);
         assertThat(animalRe.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Animal animal2 = animalRe.getBody();
-        assertThat(animal2.getName()).isEqualTo("머핀");
+        AnimalDto animal2 = animalRe.getBody();
+        assertThat(animal2.getName()).isEqualTo("바보쥐");
     }
 
     @Test
     public void 유기동물_조회_테스트(){
-        String url = "/meagea/animal/" + 8113;
-        Animal animal = testRestTemplate.getForEntity(url, Animal.class).getBody();
+        String url = "/meagea/animal/" + 8209;
+        AnimalDto animal = testRestTemplate.getForEntity(url, AnimalDto.class).getBody();
 
         assertThat(animal.getName()).isEqualTo("머핀");
     }

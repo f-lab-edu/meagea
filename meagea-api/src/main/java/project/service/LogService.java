@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.LogForm;
 import project.dto.LogTatalDto;
+import project.dto.PromotionDetailDto;
 import project.repository.AnimalFileRepository;
 import project.repository.LogRepository;
 import project.unit.AnimalFileManager;
@@ -36,13 +37,29 @@ public class LogService {
 
     public List<LogTatalDto> getAllLogByPromotionNo(int promotionNo) {
         List<LogTatalDto> dtoList = new ArrayList<>();
-        List<Log> logList = logRepo.findAllByPromotionNo(promotionNo);
+        List<Log> logList = logRepo.findAllByPromotionNoAndRemove(promotionNo, 0);
         for(Log log : logList) {
             List<AnimalFile> animalFileList = fileRepo.findAllByLogNo(log.getNo());
-            LogTatalDto dto = new LogTatalDto(log, animalFileList);
+            LogTatalDto dto = new LogTatalDto(log.getPromotionNo(), log.getBody(), log.getMakeDate(), animalFileList);
             dtoList.add(dto);
         }
 
         return dtoList;
+    }
+
+    public List<Log> deletAllLogByPromotionNo(int promotionNo) {
+        List<Log> logList = logRepo.findAllByPromotionNoAndRemove(promotionNo, 0);
+        try {
+            if(!logList.isEmpty()){
+                logList.forEach(log -> log.setRemove(1));
+                logRepo.saveAll(logList);
+            }
+        } catch (Exception ex) {
+            List<AnimalFile> animalFileList = fileRepo.findAllByPromotionNo(promotionNo);
+            animalFileList.forEach(file -> file.setRemove(0));
+            fileRepo.saveAll(animalFileList);
+            throw new RuntimeException("홍보글 삭제가 취소되었습니다.");
+        }
+        return logList;
     }
 }
